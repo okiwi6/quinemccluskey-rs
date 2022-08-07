@@ -1,5 +1,35 @@
+//! This library contains an implementation for the simplification of boolean terms.
+//!  
+//! # Example
+//! Consider the following boolean function
+//! 
+//! | A | B || C |
+//! |---|---||---|
+//! | 0 | 0 || 1 |
+//! | 0 | 1 || 0 |
+//! | 1 | 0 || 1 |
+//! | 1 | 1 || 0 |
+//! 
+//! ```
+//! // use the boolean expression from above
+//! 
+//! use quinemccluskey_rs::simplify_bool_term;
+//! 
+//! let minterms = vec![0, 2];
+//! let n_variables = Some(2);
+//! 
+//! let simplified = simplify_bool_term(&minterms, n_variables);
+//! assert_eq!(simplified, [(0b00, 0b01)]);
+//! ```
+//! Which corresponds to the function `C = B'`.
+//! More about the function and especially the interpretation of its output can be read [here](simplify_bool_term).
+
+
 use itertools::{Itertools, fold};
 use std::collections::{HashMap, HashSet};
+
+
+
 
 /// This function computes the hamming distance between two numbers with an optional mask
 /// # Arguments
